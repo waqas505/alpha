@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="lib/opacity/Control.Opacity.css" />
+        <link rel="stylesheet" href="lib/jquery/jquery-ui-1.10.3.custom.min.css" />
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="lib/opacity/Control.Opacity.js"></script>
+        <script src="lib/jquery/jquery-1.9.1.js"></script>
+        <script src="lib/jquery/jquery-ui-1.10.3.custom.min.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[33.67569974891565,72.80006964587805],[33.69489728674574,72.83266105793675]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_BlockC1_1');
+        map.getPane('pane_BlockC1_1').style.zIndex = 401;
+        var layer_BlockC1_1 = L.tileLayer('https://api.mapbox.com/styles/v1/abdulwahidgis/claz8g9b8000b15nw1ddo98pe/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWJkdWx3YWhpZGdpcyIsImEiOiJja2tjNTA5ejMwYnAwMm9wcm9ma2J3eW5kIn0.KAhsqvEGW0L0komctguj3A', {
+            pane: 'pane_BlockC1_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_BlockC1_1;
+        map.addLayer(layer_BlockC1_1);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{"Block C-1": layer_BlockC1_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var opacitySlider = new L.Control.opacitySlider();
+        map.addControl(opacitySlider);
+        opacitySlider.setOpacityLayer(layer_BlockC1_1);
+        </script>
+    </body>
+</html>
